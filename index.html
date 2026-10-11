@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Pẹt yêu dấu của anh</title>
+<title>Pẹt thúiii</title>
 <link rel="icon" type="image/png" href="/favicon.png" />
 <style>
   :root {
@@ -60,10 +60,9 @@
   .letter-preview { color:#9e7c5a; font-size:11px; letter-spacing:.16em; text-transform:uppercase; position:relative; z-index:1; }
   .env-front { position:absolute; inset:0; z-index:3; background:#e8d9c1; clip-path:polygon(0 0,50% 55%,100% 0,100% 100%,0 100%); border-radius:3px; }
   .env-front:after { content:""; position:absolute; inset:0; background:linear-gradient(135deg,rgba(255,255,255,.26),transparent 45%,rgba(134,101,69,.08)); }
-  .flap { position:absolute; inset:0; z-index:4; transform-origin:top center; transform:rotateX(0deg); transition:transform 1.25s cubic-bezier(.2,.7,.15,1), z-index .1s ease .5s; }
-  .flap-face { position:absolute; inset:0; background:linear-gradient(160deg,#f3e7d2,#dfc9aa); clip-path:polygon(0 0,100% 0,50% 63%); filter:drop-shadow(0 4px 6px rgba(85, 55, 30, 0.9)); }
-  .seal { width:49px; height:49px; border-radius:50%; position:absolute; left:50%; top:53%; transform:translate(-50%,-50%); z-index:5; background:radial-gradient(circle at 30% 25%,#e7b5b5,#c77983 58%,#a95865); box-shadow:0 4px 9px rgba(105,49,57,.2), inset 0 1px 2px rgba(255,255,255,.65); display:grid; place-items:center; color:#fff1e7; font-size:23px; transition:opacity .3s, transform .5s; }
-  .seal:after { content:""; position:absolute; inset:4px; border:1px solid rgba(255,238,218,.7); border-radius:50%; }
+  .flap { position:absolute; inset:0; z-index:4; transform-origin:top center; transform:rotateX(0deg); transition:transform 1.25s cubic-bezier(.2,.7,.15,1), z-index .1s ease .5s, filter .4s ease; filter:drop-shadow(0 6px 8px rgba(199, 124, 58, 0.112)); }
+  .flap-face { position:absolute; inset:0px; border-radius: 3px; background:linear-gradient(160deg,#f3e7d2,#dfc9aa); clip-path:polygon(0 0,100% 0,50% 55%); }
+  .seal { width:56px; height:56px; position:absolute; left:50%; top:54%; transform:translate(-50%,-50%); z-index:5; filter:drop-shadow(0px 2px 2px rgba(100, 25, 30, 0.369)); transition:opacity .3s, transform .5s; pointer-events:none; user-select:none; }
   .instruction { position:absolute; left:0; right:0; bottom:5px; font:10px Arial,sans-serif; letter-spacing:.18em; color:var(--muted); text-transform:uppercase; animation:breathe 2.2s ease-in-out infinite; }
   @keyframes breathe { 50% { opacity:.45; transform:translateY(3px); } }
   .invitation { position:absolute; width:min(78vw, 326px); height:min(112vw, 445px); max-height:445px; min-height:400px; z-index:10; opacity:0; pointer-events:none; transform:translateY(40px) scale(.82) rotateX(8deg); transition:opacity .8s .8s, transform 1.25s cubic-bezier(.18,.8,.2,1) .65s; transform-origin:center; }
@@ -85,16 +84,16 @@
   .corner.br {bottom:13px;right:13px;border-bottom:1px solid;border-right:1px solid;}
   .mini-label {font:9px Arial,sans-serif;letter-spacing:.25em;text-transform:uppercase;color:#a58b69;margin:7px 0 15px; position:relative; z-index:1;}
   .portrait { width:104px;height:104px;border-radius:50%;position:relative;margin:0 auto 14px;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#f3d4c5,#c47e83 65%,#9f5e67);box-shadow:0 0 0 5px #fff9ee,0 0 0 6px #d9c39e;overflow:hidden; }
-  .portrait svg {width:100%;height:100%;}
+  .portrait svg, .portrait img {width:100%;height:100%;object-fit:cover;object-position:center 25%;display:block;}
   .names { font-size:clamp(25px,7vw,31px);line-height:1.02;font-weight:400;color:#6d4b42;margin:0 0 9px; }
   .amp {font-style:italic;color:#c17a80;font-size:20px;display:block;margin:2px 0;}
   .invite-line {font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#9e8068;margin:7px 0 9px;}
   .date {font-size:19px;color:#775c4a;margin:0 0 6px;}
-  .details {font:10px/1.8 Arial,sans-serif;letter-spacing:.07em;color:#9a8371;margin:0;}
+  .details {font:10px/1.8;letter-spacing:.07em;color:#9a8371;margin:0;}
   .flourish {color:#c17a80;font-size:21px;margin-top:auto; padding-top:9px;}
   .opened .envelope-wrap { animation:envelopeDrop 1s .6s forwards; }
   @keyframes envelopeDrop { to { opacity:0; transform:translateY(90px) scale(.72) rotateX(18deg); pointer-events:none; } }
-  .opened .flap { transform:rotateX(180deg); z-index:1; }
+  .opened .flap { transform:rotateX(180deg); z-index:1; filter:none; }
   .opened .letter { transform:translateY(-135px); }
   .opened .seal { opacity:0; transform:translate(-50%,-50%) scale(.3) rotate(-30deg); pointer-events:none; }
   .opened .invitation { opacity:1; pointer-events:auto; transform:translateY(-5px) scale(1) rotateX(0); }
@@ -137,7 +136,7 @@
     .stage { flex:1; width:100%; height:100%; min-height:0; max-height:none; margin:0; overflow:hidden; }
     .halo { width:min(78vw, 42vh); height:min(78vw, 42vh); max-width:none; max-height:none; }
     .envelope-wrap { width:min(88vw, 52vh); height:min(64vw, 34vh); min-height:0; max-height:none; }
-    .seal { width:clamp(44px, 12vw, 58px); height:clamp(44px, 12vw, 58px); }
+    .seal { width:clamp(48px, 13vw, 62px); height:clamp(48px, 13vw, 62px); }
     .instruction { bottom:max(24px, env(safe-area-inset-bottom)); font-size:10px; }
     .invitation { position:fixed; inset:0; width:100vw; height:100vh; height:100dvh; max-height:none; min-height:0; transform:translateY(35px) scale(.96); }
     .invitation-card { inset:0; border:0; box-shadow:inset 0 0 0 1px #d7bd93, inset 0 0 0 3px rgba(255,255,255,.92), inset 0 0 0 5px rgba(191,151,87,.45); padding:calc(env(safe-area-inset-top) + 30px) clamp(22px, 7vw, 38px) calc(env(safe-area-inset-bottom) + 28px); justify-content:center; }
@@ -183,7 +182,7 @@
           <div class="letter"><span class="letter-preview">Gửi em, người anh thương</span></div>
           <div class="env-front"></div>
           <div class="flap"><div class="flap-face"></div></div>
-          <div class="seal">♥</div>
+          <img class="seal" src="love-seal.png" alt="Love Seal" draggable="false">
         </div>
       </div>
       <article class="invitation" id="invitation" aria-label="Invitation">
@@ -202,16 +201,10 @@
           </div>
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <p class="mini-label">Dành tặng cô gái tuyệt vời nhất 💐</p>
-          <div class="portrait" aria-hidden="true">
-            <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs><linearGradient id="pbg" x1="10" y1="0" x2="110" y2="120" gradientUnits="userSpaceOnUse"><stop stop-color="#f6d9c6"/><stop offset="1" stop-color="#bd747d"/></linearGradient></defs>
-              <circle cx="60" cy="60" r="60" fill="url(#pbg)"/>
-              <g opacity=".78" stroke="#fff0dc" stroke-width="1.5"><path d="M16 80C32 67 29 42 44 29M94 96C78 81 86 57 72 43M25 34c13 2 17 11 17 21M93 28c-12 4-17 14-15 24"/><path d="M35 41c-9-10-16-3-11 6 4 6 11 7 11 7s7-5 7-11c0-6-7-8-7-2ZM83 61c-9-10-16-3-11 6 4 6 11 7 11 7s7-5 7-11c0-6-7-8-7-2Z" fill="#fff0dc"/></g>
-              <g transform="translate(42 35)"><path d="M17 9C6 9 1 19 4 31l3 14h21l3-17C32 16 26 9 17 9Z" fill="#68464a"/><ellipse cx="17" cy="27" rx="12" ry="15" fill="#f5d1b8"/><path d="M5 25C5 10 12 4 21 8c7 3 10 9 9 17-3-2-6-7-8-12-3 6-9 10-17 12Z" fill="#6c4547"/><path d="M7 45c-10 8-12 19-12 29h44c0-14-6-24-13-29l-9 8-10-8Z" fill="#fff5e8"/><path d="M7 45l10 8 9-8" stroke="#c17a80" stroke-width="2"/></g>
-              <g fill="#fff4e4"><circle cx="24" cy="89" r="2"/><circle cx="93" cy="22" r="2"/><path d="M89 42l2 4 4 2-4 2-2 4-2-4-4-2 4-2 2-4Z"/></g>
-            </svg>
+          <div class="portrait">
+            <img src="avatar.jpeg" alt="Ảnh kỷ niệm" class="portrait-img">
           </div>
-          <h2 class="names">Chúc mừng<br>20/10, em yêu!</h2>
+          <h2 class="names">Chúc mừng<br>20/10, em yêu dấu!</h2>
           <p class="invite-line">Ngày của cô gái anh thương</p>
           <p class="date">💗💐🍗🥤</p>
           <p class="date">Luôn xinh đẹp &amp; hạnh phúc</p>

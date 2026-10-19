@@ -370,8 +370,10 @@
       position: absolute;
       inset: 0;
       background:
-        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paperGrain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3' stitchTiles='stitch' result='n'/%3E%3CfeColorMatrix in='n' type='matrix' values='0 0 0 0 0.4  0 0 0 0 0.3  0 0 0 0 0.17  0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperGrain)' opacity='.25'/%3E%3C/svg%3E"),
+        url("paper-1.avif"),
         linear-gradient(145deg, #fffdf7 0%, #fbf3e6 100%);
+      background-size: cover;
+      background-blend-mode: multiply;
       box-shadow: 0 25px 55px rgba(66, 43, 31, .2), inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 -2px 3px rgba(154, 126, 88, .12);
       border: 1px solid #d7bd93;
       padding: 26px 26px 22px;
@@ -400,21 +402,21 @@
       background: transparent;
     }
 
-    .invitation-card:before {
+    /* .invitation-card:before {
       content: "";
       position: absolute;
       inset: 9px;
       border: 2px solid #d4b783;
       box-shadow: inset 0 2px 2px rgba(255, 255, 255, .98), inset 0 -2px 2px rgba(137, 99, 49, .32), 0 2px 3px rgba(137, 99, 49, .34);
       pointer-events: none;
-    }
+    } */
 
     .invitation-card:after {
       content: "";
       position: absolute;
       inset: 14px;
-      border: 1px solid rgba(255, 255, 255, .98);
-      box-shadow: 0 1px 2px rgba(137, 99, 49, .22), inset 0 1px 1px rgba(255, 255, 255, .95);
+      /* border: 1px solid rgba(255, 255, 255, .98); */
+      /* box-shadow: 0 1px 2px rgba(137, 99, 49, .22), inset 0 1px 1px rgba(255, 255, 255, .95); */
       pointer-events: none;
     }
 
@@ -461,7 +463,7 @@
       fill: #c5a16e;
     }
 
-    .invitation-card> :not(.border-botanical):not(.corner) {
+    .invitation-card> :not(.border-botanical):not(.corner):not(.kiss-mark) {
       z-index: 2;
     }
 
@@ -485,7 +487,7 @@
       filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .9));
     }
 
-    .corner.tl {
+    /* .corner.tl {
       top: 16px;
       left: 16px;
       border-top: 1px solid;
@@ -511,7 +513,7 @@
       right: 16px;
       border-bottom: 1px solid;
       border-right: 1px solid;
-    }
+    } */
 
     .mini-label {
       font: 600 17px 'Dancing Script', cursive;
@@ -540,7 +542,6 @@
       display: grid;
       place-items: center;
       background: radial-gradient(circle at 35% 30%, #f3d4c5, #c47e83 65%, #9f5e67);
-      box-shadow: 0 0 0 4px #fff9ee;
       overflow: hidden;
     }
 
@@ -571,7 +572,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transform: rotate(calc(360deg / 24 * var(--i))) translateY(calc(-1 * var(--ring-r))) rotate(calc(360deg / -24 * var(--i)));
+      transform: rotate(calc(360deg / 31 * var(--i))) translateY(calc(-1 * var(--ring-r))) rotate(calc(360deg / -31 * var(--i)));
       filter: drop-shadow(0 1px 2px rgba(120, 70, 60, .25));
     }
 
@@ -612,6 +613,18 @@
       font-size: 22px;
       margin-top: 10px;
       padding-top: 8px;
+    }
+
+    .kiss-mark {
+      position: absolute;
+      left: 2%;
+      bottom: 3%;
+      font-size: 120px;
+      line-height: 1;
+      opacity: .2;
+      transform: rotate(-18deg);
+      pointer-events: none;
+      user-select: none;
     }
 
     .opened .envelope-wrap {
@@ -986,12 +999,12 @@
         width: clamp(136px, 41vw, 205px);
         height: clamp(136px, 41vw, 205px);
         margin-bottom: clamp(20px, 4vh, 28px);
-        --ring-r: clamp(58px, 17vw, 85px);
+        --ring-r: clamp(58px, 40vw, 85px);
       }
 
       .portrait {
-        width: clamp(100px, 30vw, 150px);
-        height: clamp(100px, 30vw, 150px);
+        width: clamp(100px, 40vw, 150px);
+        height: clamp(100px, 40vw, 150px);
       }
 
       .portrait-ring span {
@@ -1021,6 +1034,12 @@
 
       .flourish {
         margin-top: clamp(22px, 5vh, 38px);
+      }
+
+      .kiss-mark {
+        left: max(1%, env(safe-area-inset-left));
+        bottom: max(3%, env(safe-area-inset-bottom));
+        font-size: clamp(100px, 32vw, 160px);
       }
 
       .opened .invitation {
@@ -1247,12 +1266,21 @@
                 <span style="--i:21">🥤</span>
                 <span style="--i:22">❤️</span>
                 <span style="--i:23">🌸</span>
+                <span style="--i:24">🍗</span>
+                <span style="--i:25">🥤</span>
+                <span style="--i:26">❤️</span>
+                <span style="--i:27">🌸</span>
+                <span style="--i:28">🍗</span>
+                <span style="--i:29">🥤</span>
+                <span style="--i:30">❤️</span>
+                <span style="--i:31">🌸</span>
               </div>
             </div>
-            <h2 class="names">Chúc mừng<br>20/10, em yêu dấu!</h2>
+            <h2 class="names">Chúc mừng<br>20/10, H. Yến yêu dấu!</h2>
             <p class="date">Luôn xinh đẹp &amp; hạnh phúc 💗</p>
             <p class="details">Chúc em luôn rạng rỡ, bình yên và được yêu thương<br>Cảm ơn em vì đã đến bên anh</p>
             <div class="flourish">❀ ♥ ❀</div>
+            <div class="kiss-mark" aria-hidden="true">💋</div>
           </div>
           <div class="twinkle-layer" id="twinkleLayer" aria-hidden="true"></div>
         </article>

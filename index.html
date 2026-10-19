@@ -8,7 +8,7 @@
   <link rel="icon" type="image/png" href="/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mansalva&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       color-scheme: light;
@@ -91,17 +91,6 @@
       to {
         opacity: .95;
         transform: scale(1);
-      }
-    }
-
-    .opened .bg-bouquet-center {
-      animation: bouquetExit .5s ease forwards;
-    }
-
-    @keyframes bouquetExit {
-      to {
-        opacity: 0;
-        transform: scale(.9);
       }
     }
 
@@ -326,7 +315,8 @@
       top: 66%;
       z-index: 3;
       text-align: left;
-      font-family: 'Mansalva', cursive;
+      font-family: 'Dancing Script', cursive;
+      font-weight: 600;
       color: #5b4330;
       line-height: 1.35;
       pointer-events: none;
@@ -335,13 +325,13 @@
 
     .envelope-note .from-line {
       display: block;
-      font-size: clamp(10px, 2.9vw, 13px);
+      font-size: clamp(12px, 3.3vw, 15px);
       opacity: .9;
     }
 
     .envelope-note .to-line {
       display: block;
-      font-size: clamp(10px, 3vw, 13px);
+      font-size: clamp(12px, 3.4vw, 15px);
       margin-top: 3px;
     }
 
@@ -524,9 +514,8 @@
     }
 
     .mini-label {
-      font: 10px Arial, sans-serif;
-      letter-spacing: .22em;
-      text-transform: uppercase;
+      font: 600 17px 'Dancing Script', cursive;
+      letter-spacing: .02em;
       color: #a58b69;
       margin: 4px 0 14px;
       position: relative;
@@ -587,9 +576,10 @@
     }
 
     .names {
-      font-size: 30px;
-      line-height: 1.08;
-      font-weight: 400;
+      font-family: 'Dancing Script', cursive;
+      font-size: 42px;
+      line-height: 1.25;
+      font-weight: 700;
       color: #6d4b42;
       margin: 0 0 8px;
     }
@@ -603,14 +593,16 @@
     }
 
     .date {
-      font-size: 19px;
+      font-family: 'Dancing Script', cursive;
+      font-weight: 600;
+      font-size: 26px;
       color: #775c4a;
       margin: 0 0 6px;
     }
 
     .details {
-      font: 11px/1.7;
-      letter-spacing: .07em;
+      font: 500 16px/1.7 'Dancing Script', cursive;
+      letter-spacing: .01em;
       color: #9a8371;
       margin: 0;
     }
@@ -918,11 +910,11 @@
       }
 
       .envelope-note .from-line {
-        font-size: clamp(11px, 3.2vw, 14px);
+        font-size: clamp(13px, 3.6vw, 16px);
       }
 
       .envelope-note .to-line {
-        font-size: clamp(10px, 3vw, 13px);
+        font-size: clamp(12px, 3.4vw, 15px);
       }
 
       .instruction {
@@ -1023,8 +1015,8 @@
       }
 
       .details {
-        font-size: clamp(10px, 2.8vw, 12px);
-        line-height: 2;
+        font-size: clamp(13px, 3.6vw, 17px);
+        line-height: 1.5;
       }
 
       .flourish {
@@ -1050,12 +1042,8 @@
         inset: 9px;
       }
 
-      .mini-label {
-        letter-spacing: .2em;
-      }
-
       .details {
-        font-size: 9px;
+        font-size: 12px;
       }
     }
 
@@ -1263,7 +1251,7 @@
             </div>
             <h2 class="names">Chúc mừng<br>20/10, em yêu dấu!</h2>
             <p class="date">Luôn xinh đẹp &amp; hạnh phúc 💗</p>
-            <p class="details">CHÚC EM LUÔN RẠNG RỠ, BÌNH YÊN VÀ ĐƯỢC YÊU THƯƠNG<br>CẢM ƠN EM VÌ ĐÃ ĐẾN BÊN ANH</p>
+            <p class="details">Chúc em luôn rạng rỡ, bình yên và được yêu thương<br>Cảm ơn em vì đã đến bên anh</p>
             <div class="flourish">❀ ♥ ❀</div>
           </div>
           <div class="twinkle-layer" id="twinkleLayer" aria-hidden="true"></div>

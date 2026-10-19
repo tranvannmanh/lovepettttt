@@ -75,9 +75,13 @@
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
     }
 
+    .bg-bouquet-picture {
+      display: contents;
+    }
+
     .bg-bouquet-center {
       position: absolute;
-      width: min(138vw, 690px);
+      width: min(138vw, 900px);
       height: auto;
       pointer-events: none;
       user-select: none;
@@ -135,6 +139,10 @@
       letter-spacing: -.035em;
       margin: 0 auto 8px;
       white-space: nowrap;
+      position: relative;
+      /* z-index: 5; */
+      transform: translateY(-48px);
+      text-shadow: 0 1px 4px rgba(255, 255, 255, .8);
     }
 
     .subtitle {
@@ -142,6 +150,10 @@
       color: var(--muted);
       font-style: italic;
       margin: 0 auto;
+      position: relative;
+      /* z-index: 5; */
+      transform: translateY(-48px);
+      text-shadow: 0 1px 3px rgba(255, 255, 255, .8);
     }
 
     .stage {
@@ -156,7 +168,7 @@
       touch-action: pan-y;
     }
 
-    .halo {
+    /* .halo {
       width: 330px;
       height: 330px;
       max-width: 78vw;
@@ -165,9 +177,9 @@
       border-radius: 50%;
       border: 1px solid rgba(185, 154, 100, .28);
       transform: translateY(4px);
-    }
+    } */
 
-    .halo:before,
+    /* .halo:before,
     .halo:after {
       content: "";
       position: absolute;
@@ -181,7 +193,7 @@
       border-style: dashed;
       opacity: .5;
       animation: orbit 48s linear infinite;
-    }
+    } */
 
     @keyframes orbit {
       to {
@@ -383,6 +395,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      overflow: hidden;
     }
 
     .invitation-card>* {
@@ -428,7 +441,7 @@
       overflow: hidden;
       color: #c5a16e;
       opacity: .96;
-      filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .95)) drop-shadow(0 2px 1px rgba(115, 83, 53, .16));
+      filter: drop-shadow(0 1px 0 rgba(120, 120, 120, 0.077)) drop-shadow(0 2px 1px rgba(115, 83, 53, .16));
     }
 
     .border-botanical svg {
@@ -526,17 +539,17 @@
 
     .portrait-wrap {
       position: relative;
-      width: 142px;
-      height: 142px;
+      width: 213px;
+      height: 213px;
       margin: 0 auto 10px;
       display: grid;
       place-items: center;
-      --ring-r: 60px;
+      --ring-r: 90px;
     }
 
     .portrait {
-      width: 104px;
-      height: 104px;
+      width: 156px;
+      height: 156px;
       border-radius: 50%;
       position: relative;
       display: grid;
@@ -564,10 +577,10 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 18px;
-      height: 18px;
-      margin: -9px 0 0 -9px;
-      font-size: 12px;
+      width: 27px;
+      height: 27px;
+      margin: -13.5px 0 0 -13.5px;
+      font-size: 18px;
       line-height: 1;
       display: flex;
       align-items: center;
@@ -578,7 +591,7 @@
 
     .names {
       font-family: 'Dancing Script', cursive;
-      font-size: 42px;
+      font-size: 28px;
       line-height: 1.25;
       font-weight: 700;
       color: #6d4b42;
@@ -848,7 +861,9 @@
       }
 
       .bg-bouquet-center {
-        width: min(140vw, 93vh);
+        width: min(115vw, 65vh);
+        max-height: 86vh;
+        height: auto;
       }
 
       .app {
@@ -897,23 +912,23 @@
         overflow: hidden;
       }
 
-      .halo {
+      /* .halo {
         width: min(78vw, 42vh);
         height: min(78vw, 42vh);
         max-width: none;
         max-height: none;
-      }
+      } */
 
       .envelope-wrap {
-        width: min(88vw, 52vh);
-        height: min(64vw, 34vh);
+        width: min(76vw, 44vh);
+        height: min(55vw, 30vh);
         min-height: 0;
         max-height: none;
       }
 
       .seal {
-        width: clamp(48px, 13vw, 62px);
-        height: clamp(48px, 13vw, 62px);
+        width: clamp(42px, 11.5vw, 54px);
+        height: clamp(42px, 11.5vw, 54px);
       }
 
       .envelope-note {
@@ -923,11 +938,11 @@
       }
 
       .envelope-note .from-line {
-        font-size: clamp(13px, 3.6vw, 16px);
+        font-size: clamp(11.5px, 3.1vw, 14.5px);
       }
 
       .envelope-note .to-line {
-        font-size: clamp(12px, 3.4vw, 15px);
+        font-size: clamp(10.5px, 2.9vw, 13.5px);
       }
 
       .instruction {
@@ -963,7 +978,7 @@
       .invitation-card:after {
         inset: 20px;
         border-color: rgba(255, 255, 255, .98);
-        box-shadow: 0 2px 3px rgba(137, 99, 49, .25);
+        /* box-shadow: 0 2px 3px rgba(137, 99, 49, .25); */
       }
 
       .corner {
@@ -1015,7 +1030,7 @@
       }
 
       .names {
-        font-size: clamp(30px, 8vw, 42px);
+        font-size: clamp(24px, 8vw, 32px);
       }
 
       .amp {
@@ -1028,7 +1043,7 @@
       }
 
       .details {
-        font-size: clamp(13px, 3.6vw, 17px);
+        font-size: clamp(13px, 4.6vw, 17px);
         line-height: 1.5;
       }
 
@@ -1128,7 +1143,10 @@
       <h1>Mừng ngày 20 tháng 10 của em yêu 💗</h1>
       <p class="subtitle">Một món quà nhỏ, nhưng thật nhiều yêu thương.</p>
       <div class="stage" id="stage">
-        <img class="bg-bouquet-center" src="bouquest.png" alt="" aria-hidden="true">
+        <picture class="bg-bouquet-picture">
+          <source media="(max-width: 600px)" srcset="bouquet-phone.png">
+          <img class="bg-bouquet-center" src="bouquest.png" alt="" aria-hidden="true">
+        </picture>
         <div class="envelope-intro">
           <div class="halo" aria-hidden="true"></div>
           <div class="envelope-wrap" id="envelope" role="button" tabindex="0" aria-label="Open the invitation">
@@ -1227,16 +1245,16 @@
                   <ellipse cx="-5" cy="-1" rx="3.5" ry="5" transform="rotate(288 -5 -1)" />
                   <circle class="dot" r="2" />
                 </g>
-                <g class="dot">
+                <!-- <g class="dot">
                   <circle cx="53" cy="29" r="1.3" />
                   <circle cx="273" cy="29" r="1.3" />
                   <circle cx="53" cy="416" r="1.3" />
                   <circle cx="273" cy="416" r="1.3" />
-                </g>
+                </g> -->
               </svg>
             </div>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
-            <p class="mini-label">Dành tặng cô gái tuyệt vời nhất 💐</p>
+            <!-- <p class="mini-label">Dành tặng cô gái tuyệt vời nhất 💐</p> -->
             <div class="portrait-wrap">
               <div class="portrait">
                 <img src="avatar.jpeg" alt="Ảnh kỷ niệm" class="portrait-img">
@@ -1276,9 +1294,10 @@
                 <span style="--i:31">🌸</span>
               </div>
             </div>
-            <h2 class="names">Chúc mừng<br>20/10, H. Yến yêu dấu!</h2>
-            <p class="date">Luôn xinh đẹp &amp; hạnh phúc 💗</p>
-            <p class="details">Chúc em luôn rạng rỡ, bình yên và được yêu thương<br>Cảm ơn em vì đã đến bên anh</p>
+            <h2 class="names">Chúc mừng 20/10,<br>Hải Yến yêu dấu của anh</h2>
+            <!-- <p class="date">Luôn xinh đẹp &amp; hạnh phúc 💗</p> -->
+            <p class="details">Gửi đến cô gái của anh ngàn cái ôm và nụ hôn. Chúc em ngày luôn cười thật tươi, luôn xinh đẹp, rạng rỡ và hạnh phúc bên anh nhé. Yêu bé thật nhiều ❤︎</p>
+            <!-- <p class="details">Chúc em luôn rạng rỡ, bình yên và được yêu thương<br>Cảm ơn em vì đã đến bên anh</p> -->
             <div class="flourish">❀ ♥ ❀</div>
             <div class="kiss-mark" aria-hidden="true">💋</div>
           </div>
@@ -1353,10 +1372,10 @@
         star.className = 'twinkle';
         const kind = Math.random();
         if (kind < .24) {
-          star.textContent = ['❀', '✧', '❁'][Math.floor(Math.random() * 3)];
+          star.textContent = ['❀', '✧', '✧'][Math.floor(Math.random() * 3)];
           star.classList.add('flower');
         } else if (kind < .48) {
-          star.textContent = Math.random() > .5 ? '✧' : '♥';
+          star.textContent = Math.random() > .5 ? '✧' : '✧';
           star.classList.add('heart');
         } else if (kind < .64) {
           star.textContent = Math.random() > .5 ? '✦' : '❁';

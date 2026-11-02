@@ -100,10 +100,44 @@
       line-height: 1.5;
     }
 
+    /* birthday scene stays hidden (and its intro animations wait) until a sound choice is made */
+    body.waiting .title,
+    body.waiting .stage,
+    body.waiting .garden,
+    body.waiting .balloons,
+    body.waiting #fireworks,
+    body.waiting .hint,
+    body.waiting .sound-toggle {
+      visibility: hidden;
+    }
+
+    body.waiting .title *,
+    body.waiting .flower,
+    body.waiting .flower *,
+    body.waiting .balloon,
+    body.waiting .balloon * {
+      animation: none !important;
+    }
+
+    .sound-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .sound-card button.off {
+      color: #a8486f;
+      background: #fff0f6;
+      box-shadow: none;
+      border: 1px solid #f6c3d6;
+    }
+
     .sound-card button {
       border: 0;
       border-radius: 999px;
       padding: 12px 28px;
+      min-width: 200px;
       font: 600 1rem Georgia, serif;
       color: #fff;
       background: linear-gradient(90deg, #f0679a, #c67ddc);
@@ -610,7 +644,7 @@
   </style>
 </head>
 
-<body>
+<body class="waiting">
   <div class="balloons" id="balloons"></div>
   <canvas id="fireworks"></canvas>
 
@@ -657,16 +691,19 @@
   </div>
 
   <div class="hint" id="hint">Chạm vào bánh sinh nhật nhé 🎂</div>
-  <audio id="music" src="/birthday.mp3" preload="auto" autoplay loop></audio>
+  <audio id="music" src="/birthday.mp3" preload="auto" loop></audio>
   <button class="sound-toggle" id="soundToggle" type="button" aria-label="Tắt nhạc">🔊</button>
 
-  <!-- shown only when the browser blocks autoplay with sound -->
-  <div class="sound-gate hide" id="soundGate" role="dialog" aria-label="Trang có âm thanh">
+  <!-- shown first: the birthday scene starts after the visitor picks sound on/off -->
+  <div class="sound-gate" id="soundGate" role="dialog" aria-label="Trang có âm thanh">
     <div class="sound-card">
       <div class="icon">🔊</div>
       <h2>Trang có âm thanh</h2>
-      <p>Hãy bật loa hoặc đeo tai nghe để nghe nhạc nhé 🎶</p>
-      <button type="button" id="soundStart">Bắt đầu 🎂</button>
+      <p>Bạn có muốn bật nhạc khi xem không? 🎶</p>
+      <div class="sound-actions">
+        <button type="button" id="soundOn">🔊 Bật âm thanh</button>
+        <button type="button" class="off" id="soundOff">🔇 Tắt âm thanh</button>
+      </div>
     </div>
   </div>
 
@@ -1081,19 +1118,16 @@
       music.addEventListener('play', updateToggle);
       music.addEventListener('pause', updateToggle);
 
-      // Try to start the music right away. Most browsers block sound until the
-      // visitor interacts, so in that case show the sound notice instead.
-      music.addEventListener('playing', () => soundGate.classList.add('hide'));
-      music.play().catch(() => soundGate.classList.remove('hide'));
-      // play() can stay pending while the file loads — show the notice if nothing is playing yet
-      setTimeout(() => { if (music.paused) soundGate.classList.remove('hide'); }, 1200);
       updateToggle();
 
-      soundGate.addEventListener('click', () => {
-        music.muted = false;
-        music.play().catch(() => { });
+      // the visitor chooses sound on/off, then the birthday scene starts
+      function startBirthday(withSound) {
+        if (withSound) music.play().catch(() => { });
         soundGate.classList.add('hide');
-      });
+        document.body.classList.remove('waiting');
+      }
+      document.getElementById('soundOn').addEventListener('click', () => startBirthday(true));
+      document.getElementById('soundOff').addEventListener('click', () => startBirthday(false));
 
       soundToggle.addEventListener('click', () => {
         if (music.paused) music.play().catch(() => { });

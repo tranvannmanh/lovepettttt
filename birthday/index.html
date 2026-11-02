@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Happy Birthday</title>
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sky-top: #0b0a24;
+      --sky-mid: #1d1442;
+      --sky-low: #3a1d4f;
+      --cream: #fff4e3;
+      --pink: #f6a6c1;
+      --pink-dark: #d9708f;
+      --choco: #6b3b2a;
+      --gold: #ffd77a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 55%, var(--sky-low) 100%);
+      color: var(--cream);
+      font-family: 'Dancing Script', Georgia, serif;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    #fireworks {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* ---------- Title ---------- */
+    .title {
+      position: fixed;
+      top: max(4vh, env(safe-area-inset-top));
+      left: 0;
+      right: 0;
+      z-index: 4;
+      text-align: center;
+      pointer-events: none;
+      padding: 0 16px;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 8vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      background: linear-gradient(90deg, #ffd77a, #ff9ec4, #c9a7ff, #ffd77a);
+      background-size: 300% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 18px rgba(255, 170, 210, .45));
+      animation: shimmer 6s linear infinite, fadeDown 1.4s ease-out both;
+    }
+
+    .title p {
+      margin: .3em 0 0;
+      font-size: clamp(1.2rem, 3.6vw, 2rem);
+      color: #ffe9f2;
+      opacity: .9;
+      animation: fadeDown 1.4s .4s ease-out both;
+    }
+
+    @keyframes shimmer {
+      to {
+        background-position: 300% 0;
+      }
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* ---------- Cake (CSS 3D) ---------- */
+    .stage {
+      position: fixed;
+      left: 50%;
+      top: 56%;
+      transform: translate(-50%, -50%);
+      /* above the title so the photo overlaps the text (pop-out effect) */
+      z-index: 5;
+      perspective: 900px;
+      width: var(--cake-size);
+      height: var(--cake-size);
+      --cake-size: min(62vw, 340px);
+      pointer-events: none;
+    }
+
+    .glow {
+      position: absolute;
+      left: 50%;
+      bottom: 4%;
+      width: 130%;
+      height: 30%;
+      transform: translateX(-50%);
+      background: radial-gradient(ellipse at center, rgba(255, 200, 120, .35), transparent 70%);
+      filter: blur(6px);
+    }
+
+    .cake {
+      position: absolute;
+      left: 50%;
+      top: 62%;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
+      transform: rotateX(-16deg) rotateY(0deg);
+      animation: spin 9s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotateX(-16deg) rotateY(0deg);
+      }
+
+      to {
+        transform: rotateX(-16deg) rotateY(360deg);
+      }
+    }
+
+    .tier,
+    .candle,
+    .plate {
+      position: absolute;
+      transform-style: preserve-3d;
+    }
+
+    .face {
+      position: absolute;
+      backface-visibility: hidden;
+    }
+
+    .disc {
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .candle .stick {
+      position: absolute;
+      backface-visibility: visible;
+      background: repeating-linear-gradient(160deg, #fff 0 5px, #ff8fb1 5px 10px);
+      border-radius: 2px;
+    }
+
+    .candle .flame {
+      position: absolute;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      background: radial-gradient(ellipse at 50% 70%, #fff 0 20%, #ffe28a 35%, #ff9d2e 65%, rgba(255, 90, 0, 0) 75%);
+      transform-origin: 50% 100%;
+      animation: flicker .18s ease-in-out infinite alternate;
+    }
+
+    @keyframes flicker {
+      from {
+        transform: var(--rot) scale(1, 1);
+      }
+
+      to {
+        transform: var(--rot) scale(.88, 1.12) skewX(3deg);
+      }
+    }
+
+    /* ---------- Flowers ---------- */
+    .garden {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 36vh;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .flower {
+      position: absolute;
+      bottom: -4px;
+      transform-origin: 50% 100%;
+      animation: sway var(--sway, 4s) ease-in-out infinite alternate;
+      animation-delay: calc(var(--delay) + 2.4s);
+    }
+
+    .flower svg {
+      display: block;
+      overflow: visible;
+    }
+
+    .flower .stem {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      animation: grow 1.8s var(--delay) cubic-bezier(.3, .7, .3, 1) forwards;
+    }
+
+    .flower .leaf,
+    .flower .head {
+      transform-box: fill-box;
+      transform: scale(0);
+    }
+
+    .flower .leaf {
+      transform-origin: 0% 100%;
+      animation: pop .8s calc(var(--delay) + .7s) cubic-bezier(.3, 1.5, .5, 1) forwards;
+    }
+
+    .flower .leaf.right {
+      transform-origin: 100% 100%;
+    }
+
+    .flower .head {
+      transform-origin: 50% 50%;
+      animation: bloom 1.3s calc(var(--delay) + 1.5s) cubic-bezier(.25, 1.4, .5, 1) forwards;
+    }
+
+    @keyframes grow {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes pop {
+      to {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes bloom {
+      0% {
+        transform: scale(0) rotate(-120deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    @keyframes sway {
+      from {
+        transform: rotate(calc(var(--tilt) - 3deg));
+      }
+
+      to {
+        transform: rotate(calc(var(--tilt) + 3deg));
+      }
+    }
+
+    /* ---------- Hint ---------- */
+    .hint {
+      position: fixed;
+      z-index: 5;
+      left: 50%;
+      bottom: max(14px, env(safe-area-inset-bottom));
+      transform: translateX(-50%);
+      font-family: Georgia, serif;
+      font-size: .8rem;
+      letter-spacing: .04em;
+      color: rgba(255, 240, 248, .7);
+      background: rgba(20, 10, 40, .35);
+      padding: 6px 14px;
+      border-radius: 999px;
+      backdrop-filter: blur(4px);
+      transition: opacity .6s;
+      max-width: calc(100vw - 32px);
+      text-align: center;
+    }
+
+    .hint.hide {
+      opacity: 0;
+    }
+
+    /* ---------- Tap the cake ---------- */
+    .cake-hit {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      top: 8%;
+      height: 74%;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      pointer-events: auto;
+      border-radius: 40%;
+      z-index: 5;
+    }
+
+    /* photo rising from behind the cake */
+    .photo {
+      position: absolute;
+      left: 50%;
+      bottom: calc(var(--cake-size) * 0.48);
+      width: calc(var(--cake-size) * 2.3);
+      max-width: 120vw;
+      filter: drop-shadow(0 12px 24px rgba(0, 0, 0, .45));
+      transform: translate(-50%, 35%);
+      opacity: 0;
+      transition: transform 1.3s cubic-bezier(.2, 1.25, .4, 1), opacity .8s ease-out;
+      -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 92%);
+      mask-image: linear-gradient(to bottom, #000 70%, transparent 92%);
+      pointer-events: none;
+    }
+
+    @media (max-width: 600px) {
+      .photo {
+        width: calc(var(--cake-size) * 2.3);
+        max-width: 130vw;
+      }
+    }
+
+    .photo.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    /* knife that cuts the cake */
+    .knife {
+      position: absolute;
+      left: 46%;
+      top: 0;
+      width: 42%;
+      opacity: 0;
+      pointer-events: none;
+      transform-origin: 20% 80%;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .35));
+      z-index: 4;
+    }
+
+    .knife.cut {
+      animation: cut 1.4s ease-in-out forwards;
+    }
+
+    @keyframes cut {
+      0% {
+        opacity: 0;
+        transform: translate(50%, -40%) rotate(-20deg);
+      }
+
+      15% {
+        opacity: 1;
+        transform: translate(10%, -12%) rotate(-20deg);
+      }
+
+      35% {
+        transform: translate(-30%, 22%) rotate(-38deg);
+      }
+
+      52% {
+        transform: translate(10%, -12%) rotate(-20deg);
+      }
+
+      74% {
+        opacity: 1;
+        transform: translate(0%, 26%) rotate(-5deg);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translate(45%, -25%) rotate(-15deg);
+      }
+    }
+
+    /* the slice with the wish */
+    .wish {
+      position: fixed;
+      inset: 0;
+      z-index: 6;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 16px;
+      background: rgba(10, 6, 30, .55);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .6s, visibility 0s .6s;
+    }
+
+    .wish.show {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .6s;
+    }
+
+    .slice {
+      position: relative;
+      width: min(94vw, 600px);
+      container-type: inline-size;
+      transform: translateY(18vh) scale(.2) rotate(-25deg);
+      opacity: 0;
+      transition: transform 1.1s cubic-bezier(.2, 1.3, .4, 1), opacity .5s;
+      filter: drop-shadow(0 18px 30px rgba(0, 0, 0, .45));
+    }
+
+    .wish.show .slice {
+      transform: none;
+      opacity: 1;
+    }
+
+    .slice svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* text area sits on the cut (front) face of the slice */
+    /* one wish line inside each sponge (white cream) layer of the cut face */
+    .slice-text {
+      position: absolute;
+      inset: 0 7% 0 5%;
+      font-size: 4.3cqw;
+      line-height: 1;
+      text-align: center;
+      color: #8a3d4f;
+      font-weight: 700;
+      text-shadow: 0 0 6px rgba(255, 250, 240, .95), 0 1px 0 #fff;
+    }
+
+    .slice-text .line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      transform: translateY(-50%);
+      white-space: nowrap;
+    }
+
+    /* centres of the three sponge layers (viewBox y 131, 186, 241 of 300) */
+    .slice-text .line:nth-of-type(1) {
+      top: 43.7%;
+    }
+
+    .slice-text .line:nth-of-type(2) {
+      top: 62%;
+    }
+
+    .slice-text .line:nth-of-type(3) {
+      top: 80.3%;
+    }
+
+    .wish-close {
+      font-family: Georgia, serif;
+      font-size: .8rem;
+      color: rgba(255, 240, 248, .7);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cake {
+        animation-duration: 30s;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="fireworks"></canvas>
+
+  <header class="title">
+    <h1>Happy Birthday</h1>
+    <p>Trần Thị Hải Yến 🎂</p>
+  </header>
+
+  <div class="stage">
+    <div class="glow"></div>
+    <img class="photo" id="photo" src="/birthday/haiyeu_pizz-no-bg.png" alt="Hải Yến" loading="eager" />
+    <div class="cake" id="cake"></div>
+    <svg class="knife" id="knife" viewBox="0 0 200 60" aria-hidden="true">
+      <defs>
+        <linearGradient id="blade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" />
+          <stop offset=".5" stop-color="#d7dde6" />
+          <stop offset="1" stop-color="#9aa3b0" />
+        </linearGradient>
+      </defs>
+      <path d="M8 34 Q40 14 132 18 L132 40 Q60 44 8 34 Z" fill="url(#blade)" stroke="#8a93a0" stroke-width="1" />
+      <rect x="130" y="16" width="8" height="26" rx="2" fill="#c9a96b" />
+      <rect x="138" y="20" width="56" height="18" rx="9" fill="#6b3b2a" />
+      <circle cx="152" cy="29" r="2.2" fill="#e6c98f" />
+      <circle cx="178" cy="29" r="2.2" fill="#e6c98f" />
+    </svg>
+    <button class="cake-hit" id="cakeHit" type="button" aria-label="Cắt bánh sinh nhật"></button>
+  </div>
+
+  <div class="garden" id="garden"></div>
+
+  <div class="wish" id="wish" role="dialog" aria-label="Lời chúc sinh nhật">
+    <div class="slice">
+      <svg id="sliceSvg" viewBox="0 0 500 300" aria-hidden="true"></svg>
+      <div class="slice-text">
+        <!-- ✏️ Sửa lời chúc ở đây — mỗi dòng nằm trên một lớp bánh -->
+        <div class="line">Chúc mừng sinh nhật Hải Yến yêu dấu! 🎂</div>
+        <div class="line">Tuổi mới thật nhiều niềm vui, luôn xinh đẹp,</div>
+        <div class="line">khoẻ mạnh và hạnh phúc nhé 💖</div>
+      </div>
+    </div>
+    <div class="wish-close">Chạm để đóng</div>
+  </div>
+
+  <div class="hint" id="hint">Chạm vào bánh sinh nhật nhé 🎂</div>
+  <audio id="music" src="/music.mp3" preload="none" loop></audio>
+
+  <script>
+    (() => {
+      /* ================= 3D CAKE ================= */
+      const cake = document.getElementById('cake');
+      const stage = document.querySelector('.stage');
+
+      function buildCake() {
+        cake.innerHTML = '';
+        const S = stage.clientWidth;            // stage size in px
+        const N = 28;                           // faces around the cylinder
+
+        // Build a cylinder tier. yTop = distance from cake origin to tier top (negative = up)
+        function tier(r, h, yBottom, sideStyle, topColor, frosting) {
+          const t = document.createElement('div');
+          t.className = 'tier';
+          const w = 2 * r * Math.tan(Math.PI / N) + 1;
+          for (let i = 0; i < N; i++) {
+            const f = document.createElement('div');
+            f.className = 'face';
+            f.style.width = w + 'px';
+            f.style.height = h + 'px';
+            f.style.left = -w / 2 + 'px';
+            f.style.top = (yBottom - h) + 'px';
+            // shade faces a bit so the rotation reads clearly
+            const shade = 0.82 + 0.18 * Math.cos((i / N) * Math.PI * 2);
+            f.style.background = sideStyle;
+            f.style.filter = `brightness(${shade.toFixed(2)})`;
+            f.style.transform = `rotateY(${(360 / N) * i}deg) translateZ(${r}px)`;
+            t.appendChild(f);
+          }
+          // top disc
+          const top = document.createElement('div');
+          top.className = 'disc';
+          top.style.width = top.style.height = r * 2 + 'px';
+          top.style.left = -r + 'px';
+          top.style.top = (yBottom - h - r) + 'px';
+          top.style.background = topColor;
+          top.style.transform = `rotateX(90deg)`;
+          t.appendChild(top);
+
+          // frosting drips as small balls around the top rim
+          if (frosting) {
+            const M = 18;
+            for (let i = 0; i < M; i++) {
+              const b = document.createElement('div');
+              const d = Math.max(6, r * 0.16);
+              b.className = 'disc';
+              b.style.width = b.style.height = d + 'px';
+              b.style.left = -d / 2 + 'px';
+              b.style.top = (yBottom - h - d / 2) + 'px';
+              b.style.background = `radial-gradient(circle at 35% 35%, #fff, ${frosting})`;
+              b.style.transform = `rotateY(${(360 / M) * i}deg) translateZ(${r}px)`;
+              t.appendChild(b);
+            }
+          }
+          cake.appendChild(t);
+          return yBottom - h;
+        }
+
+        // plate
+        const plate = document.createElement('div');
+        plate.className = 'disc';
+        const pr = S * 0.46;
+        plate.style.width = plate.style.height = pr * 2 + 'px';
+        plate.style.left = -pr + 'px';
+        plate.style.top = -pr + 'px';
+        plate.style.background = 'radial-gradient(circle, #fff 0 60%, #e8dff0 61% 68%, #cbbfdc 70%)';
+        plate.style.transform = 'rotateX(90deg)';
+        cake.appendChild(plate);
+
+        const r1 = S * 0.36, h1 = S * 0.22;
+        const r2 = S * 0.25, h2 = S * 0.18;
+
+        const bottomSide = `linear-gradient(180deg, #ffd1df 0 14%, var(--pink) 14% 46%, #fff4e3 46% 54%, var(--pink) 54% 88%, var(--pink-dark) 88%)`;
+        const topSide = `linear-gradient(180deg, #fff 0 12%, #fff4e3 12% 44%, var(--choco) 44% 56%, #fff4e3 56% 90%, #e9d6bc 90%)`;
+
+        const y1 = tier(r1, h1, 0, bottomSide, 'radial-gradient(circle, #ffe3ec, #ffc2d5)', '#ff9cbc');
+        const y2 = tier(r2, h2, y1, topSide, 'radial-gradient(circle, #fff, #ffeedd)', '#ffffff');
+
+        // candles on top tier
+        const candleCount = 5;
+        const ch = S * 0.13, cw = Math.max(5, S * 0.026);
+        const ring = r2 * 0.55;
+        for (let i = 0; i < candleCount; i++) {
+          const a = (360 / candleCount) * i;
+          const c = document.createElement('div');
+          c.className = 'candle';
+          c.style.transform = `rotateY(${a}deg) translateZ(${ring}px)`;
+          // two crossed planes so the candle never disappears edge-on
+          [0, 90].forEach(rot => {
+            const s = document.createElement('div');
+            s.className = 'stick';
+            s.style.width = cw + 'px';
+            s.style.height = ch + 'px';
+            s.style.left = -cw / 2 + 'px';
+            s.style.top = (y2 - ch) + 'px';
+            s.style.transform = `rotateY(${rot}deg)`;
+            c.appendChild(s);
+
+            const fl = document.createElement('div');
+            fl.className = 'flame';
+            const fw = cw * 2, fh = cw * 3.4;
+            fl.style.width = fw + 'px';
+            fl.style.height = fh + 'px';
+            fl.style.left = -fw / 2 + 'px';
+            fl.style.top = (y2 - ch - fh) + 'px';
+            fl.style.setProperty('--rot', `rotateY(${rot}deg)`);
+            fl.style.animationDelay = (Math.random() * .3) + 's';
+            c.appendChild(fl);
+          });
+          cake.appendChild(c);
+        }
+      }
+
+      /* ================= FLOWERS ================= */
+      const garden = document.getElementById('garden');
+      const palettes = [
+        ['#ff7aa8', '#ffd1e0', '#ffd23f'],
+        ['#ffb347', '#ffe0b0', '#8a4b20'],
+        ['#c79bff', '#eedcff', '#ffe066'],
+        ['#ff5f6d', '#ffc3c8', '#fff3b0'],
+        ['#7fd1ff', '#d9f2ff', '#ffcf5c'],
+        ['#ffffff', '#fff7d6', '#ffb100'],
+      ];
+
+      function flowerSVG(h, pal, petals, kind) {
+        const W = 120;
+        const cx = W / 2;
+        const bend = (Math.random() - .5) * 30;
+        const headY = 30;
+        const stem = `M ${cx} ${h} C ${cx + bend} ${h * .66}, ${cx - bend} ${h * .33}, ${cx} ${headY}`;
+        const leafY = h * (0.5 + Math.random() * .2);
+        const leafR = `<path class="leaf" d="M ${cx} ${leafY} q 22 -6 34 -26 q -24 0 -34 26 z" fill="#4caf6a"/>`;
+        const leafL = `<path class="leaf right" d="M ${cx} ${leafY + 18} q -22 -6 -32 -24 q 22 0 32 24 z" fill="#3e9a5b"/>`;
+
+        let petalsSvg = '';
+        for (let i = 0; i < petals; i++) {
+          const a = (360 / petals) * i;
+          if (kind === 0) {
+            petalsSvg += `<ellipse cx="${cx}" cy="${headY - 15}" rx="8" ry="16" fill="${pal[0]}" stroke="${pal[1]}" stroke-width="1.5" transform="rotate(${a} ${cx} ${headY})"/>`;
+          } else if (kind === 1) {
+            petalsSvg += `<path d="M ${cx} ${headY} q -10 -14 0 -28 q 10 14 0 28 z" fill="${pal[0]}" stroke="${pal[1]}" stroke-width="1.2" transform="rotate(${a} ${cx} ${headY})"/>`;
+          } else {
+            petalsSvg += `<circle cx="${cx}" cy="${headY - 12}" r="10" fill="${pal[0]}" opacity=".92" transform="rotate(${a} ${cx} ${headY})"/>`;
+          }
+        }
+        const center = `<circle cx="${cx}" cy="${headY}" r="${kind === 2 ? 9 : 7}" fill="${pal[2]}"/><circle cx="${cx - 2}" cy="${headY - 2}" r="2.5" fill="#fff" opacity=".6"/>`;
+
+        return `<svg width="${W}" height="${h}" viewBox="0 0 ${W} ${h}">
+          <path class="stem" pathLength="1" d="${stem}" fill="none" stroke="#3d9b58" stroke-width="4" stroke-linecap="round"/>
+          ${leafR}${leafL}
+          <g class="head">${petalsSvg}${center}</g>
+        </svg>`;
+      }
+
+      function buildGarden() {
+        garden.innerHTML = '';
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+        // keep the flowers below the cake plate so they never hide behind it
+        const sr = stage.getBoundingClientRect();
+        const S = stage.clientWidth;
+        const cakeBottom = sr.top + S * 0.62 + S * 0.15;
+        const avail = Math.max(90, Math.min(vh * 0.28, vh - cakeBottom - 14));
+        garden.style.height = avail + 'px';
+        // smaller flowers and fewer of them on narrow (phone) screens
+        const sizeK = Math.min(1, Math.max(0.75, vw / 700));
+        const count = Math.max(6, Math.min(16, Math.round(vw / 60)));
+        for (let i = 0; i < count; i++) {
+          const el = document.createElement('div');
+          el.className = 'flower';
+          const scale = sizeK * (0.8 + Math.random() * 0.3);
+          // visual height (svg height × scale) stays within the free space
+          const h = Math.max(70, (avail * (0.45 + Math.random() * 0.45)) / scale);
+          const pal = palettes[Math.floor(Math.random() * palettes.length)];
+          const kind = Math.floor(Math.random() * 3);
+          const petals = kind === 2 ? 5 : 6 + Math.floor(Math.random() * 4);
+          el.innerHTML = flowerSVG(h, pal, petals, kind);
+          const x = ((i + 0.5) / count) * 100 + (Math.random() - .5) * (20 / count);
+          el.style.left = `calc(${x}% - 60px)`;
+          el.style.setProperty('--delay', (0.3 + Math.random() * 2.2).toFixed(2) + 's');
+          el.style.setProperty('--tilt', ((Math.random() - .5) * 14).toFixed(1) + 'deg');
+          el.style.setProperty('--sway', (3 + Math.random() * 3).toFixed(1) + 's');
+          el.querySelector('svg').style.transform = `scale(${scale.toFixed(2)})`;
+          el.querySelector('svg').style.transformOrigin = '50% 100%';
+          garden.appendChild(el);
+        }
+      }
+
+      /* ================= FIREWORK RAIN (canvas) ================= */
+      const canvas = document.getElementById('fireworks');
+      const ctx = canvas.getContext('2d');
+      let W = 0, H = 0, dpr = 1;
+      const particles = [];
+      const rain = [];
+      const stars = [];
+      const colors = ['#ffd77a', '#ff9ec4', '#c9a7ff', '#7fe0ff', '#ff6b8b', '#ffffff', '#a8ff9e'];
+
+      function resizeCanvas() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        W = window.innerWidth;
+        H = window.innerHeight;
+        canvas.width = W * dpr;
+        canvas.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        stars.length = 0;
+        const n = Math.round((W * H) / 9000);
+        for (let i = 0; i < n; i++) {
+          stars.push({ x: Math.random() * W, y: Math.random() * H * 0.7, r: Math.random() * 1.2 + .2, p: Math.random() * Math.PI * 2 });
+        }
+      }
+
+      // Paper confetti (giấy pháo): small rectangles that tumble and flutter down
+      const confettiColors = [
+        { c: '#c2185b' }, { c: '#ff4f9a' }, { c: '#ffb3cf' }, { c: '#e53950' },
+        { c: '#e8b04a', metal: true }, { c: '#f5d37a', metal: true },
+        { c: '#cfd3da', metal: true }, { c: '#fdfdfd' },
+      ];
+      function spawnRain() {
+        const w = 7 + Math.random() * 6;
+        rain.push({
+          x: Math.random() * W,
+          y: -15,
+          w,
+          h: w * (0.45 + Math.random() * 0.35),
+          vy: 0.9 + Math.random() * 0.9,
+          rot: Math.random() * Math.PI * 2,
+          vrot: (Math.random() - .5) * 0.08,
+          flip: Math.random() * Math.PI * 2,
+          vflip: 0.05 + Math.random() * 0.1,
+          sway: Math.random() * Math.PI * 2,
+          vsway: 0.02 + Math.random() * 0.03,
+          amp: 0.6 + Math.random() * 1.2,
+          ...confettiColors[Math.floor(Math.random() * confettiColors.length)],
+        });
+      }
+
+      // Firework burst whose sparks fall down like rain
+      function burst(x, y) {
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const color2 = colors[Math.floor(Math.random() * colors.length)];
+        const n = 70 + Math.floor(Math.random() * 40);
+        const power = 2.8 + Math.random() * 2.4;
+        for (let i = 0; i < n; i++) {
+          const a = (Math.PI * 2 * i) / n + Math.random() * .1;
+          const sp = power * (0.5 + Math.random() * 0.6);
+          particles.push({
+            x, y,
+            px: x, py: y,
+            vx: Math.cos(a) * sp,
+            vy: Math.sin(a) * sp,
+            life: 1,
+            decay: 0.006 + Math.random() * 0.008,
+            color: Math.random() < .7 ? color : color2,
+            twinkle: Math.random() < .35,
+          });
+        }
+      }
+
+      // Shooting stars crossing the sky diagonally
+      const meteors = [];
+      let nextMeteor = performance.now() + 1500;
+      function spawnMeteor() {
+        const fromLeft = Math.random() < 0.5;
+        const angle = (20 + Math.random() * 20) * Math.PI / 180;   // downward slope
+        const speed = 11 + Math.random() * 6;
+        meteors.push({
+          x: fromLeft ? Math.random() * W * 0.5 : W * 0.5 + Math.random() * W * 0.5,
+          y: Math.random() * H * 0.25,
+          vx: (fromLeft ? 1 : -1) * Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          len: 120 + Math.random() * 120,
+          life: 1,
+        });
+      }
+
+      let lastTime = performance.now();
+
+      function frame(now) {
+        const dt = Math.min(3, (now - lastTime) / 16.67);
+        lastTime = now;
+
+        ctx.clearRect(0, 0, W, H);
+
+        // twinkling stars
+        for (const s of stars) {
+          s.p += 0.03 * dt;
+          ctx.globalAlpha = 0.35 + 0.35 * Math.sin(s.p);
+          ctx.fillStyle = '#fff';
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+
+        // spawn glitter rain
+        // (~1/4 of the previous density, scales with screen width)
+        if (rain.length < 160 && Math.random() < Math.min(0.5, (W / 1400) * 0.3) * dt) spawnRain();
+
+        // a shooting star every 2–3s
+        if (now >= nextMeteor) {
+          spawnMeteor();
+          nextMeteor = now + 2000 + Math.random() * 1000;
+        }
+
+        ctx.globalCompositeOperation = 'lighter';
+        ctx.lineCap = 'round';
+
+        // shooting stars
+        for (let i = meteors.length - 1; i >= 0; i--) {
+          const m = meteors[i];
+          m.x += m.vx * dt;
+          m.y += m.vy * dt;
+          m.life -= 0.012 * dt;
+          const sp = Math.hypot(m.vx, m.vy);
+          const tx = m.x - (m.vx / sp) * m.len;
+          const ty = m.y - (m.vy / sp) * m.len;
+          const fade = Math.min(1, m.life * 2.5);
+          const g = ctx.createLinearGradient(tx, ty, m.x, m.y);
+          g.addColorStop(0, 'rgba(255,255,255,0)');
+          g.addColorStop(0.7, `rgba(200,220,255,${0.35 * fade})`);
+          g.addColorStop(1, `rgba(255,255,255,${fade})`);
+          ctx.strokeStyle = g;
+          ctx.lineWidth = 2.4;
+          ctx.beginPath();
+          ctx.moveTo(tx, ty);
+          ctx.lineTo(m.x, m.y);
+          ctx.stroke();
+          const hg = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, 9);
+          hg.addColorStop(0, `rgba(255,255,255,${fade})`);
+          hg.addColorStop(0.4, `rgba(190,215,255,${0.5 * fade})`);
+          hg.addColorStop(1, 'rgba(190,215,255,0)');
+          ctx.fillStyle = hg;
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, 9, 0, Math.PI * 2);
+          ctx.fill();
+          if (m.life <= 0 || m.x < -m.len || m.x > W + m.len || m.y > H + m.len) meteors.splice(i, 1);
+        }
+
+        // paper confetti (normal blending so colours stay solid like real paper)
+        ctx.globalCompositeOperation = 'source-over';
+        for (let i = rain.length - 1; i >= 0; i--) {
+          const r = rain[i];
+          r.sway += r.vsway * dt;
+          r.flip += r.vflip * dt;
+          r.rot += r.vrot * dt;
+          r.x += Math.sin(r.sway) * r.amp * dt;
+          // falls a little slower while lying flat (more air resistance)
+          const face = Math.cos(r.flip);
+          r.y += r.vy * (0.75 + 0.5 * (1 - Math.abs(face))) * dt;
+          ctx.save();
+          ctx.translate(r.x, r.y);
+          ctx.rotate(r.rot);
+          ctx.scale(1, face || 0.01);
+          ctx.fillStyle = r.c;
+          ctx.fillRect(-r.w / 2, -r.h / 2, r.w, r.h);
+          // shading as the paper turns; metallic pieces catch a highlight
+          const shade = 1 - Math.abs(face);
+          if (shade > 0.05) {
+            ctx.fillStyle = `rgba(0,0,0,${(0.35 * shade).toFixed(3)})`;
+            ctx.fillRect(-r.w / 2, -r.h / 2, r.w, r.h);
+          }
+          if (r.metal && Math.abs(face) > 0.85) {
+            ctx.fillStyle = `rgba(255,255,255,${((Math.abs(face) - 0.85) * 3).toFixed(3)})`;
+            ctx.fillRect(-r.w / 2, -r.h / 2, r.w, r.h);
+          }
+          ctx.restore();
+          if (r.y > H + 20) rain.splice(i, 1);
+        }
+        ctx.globalCompositeOperation = 'lighter';
+
+        // burst sparks with gravity → fall down
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          p.px = p.x; p.py = p.y;
+          p.vx *= Math.pow(0.985, dt);
+          p.vy = p.vy * Math.pow(0.985, dt) + 0.045 * dt;
+          p.x += p.vx * dt;
+          p.y += p.vy * dt;
+          p.life -= p.decay * dt;
+          if (p.life <= 0 || p.y > H + 10) { particles.splice(i, 1); continue; }
+          let a = p.life;
+          if (p.twinkle) a *= Math.random() < .5 ? .2 : 1;
+          ctx.globalAlpha = a;
+          ctx.strokeStyle = p.color;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(p.px - p.vx * 2, p.py - p.vy * 2);
+          ctx.lineTo(p.x, p.y);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+        ctx.globalCompositeOperation = 'source-over';
+
+        requestAnimationFrame(frame);
+      }
+
+      /* ================= Interaction ================= */
+      const music = document.getElementById('music');
+      const hint = document.getElementById('hint');
+      let started = false;
+
+      window.addEventListener('pointerdown', (e) => {
+        if (!started) {
+          started = true;
+          music.play().catch(() => { });
+        }
+        // the cake and the wish card have their own behaviour
+        if (e.target.closest('.cake-hit, .wish')) return;
+        burst(e.clientX, e.clientY);
+      });
+
+      /* ================= Cut the cake → wish slice ================= */
+      // Slice lying on its side: the cut face (with the wish) faces the viewer,
+      // thin top face above it, rounded outer rim on the right.
+      (function drawSlice() {
+        const svg = document.getElementById('sliceSvg');
+        const L = 24, R = 466, T = 96, B = 272;
+        let out = `<defs>
+            <linearGradient id="topFace" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#ffe4ee"/><stop offset="1" stop-color="#ffc2d5"/>
+            </linearGradient>
+            <linearGradient id="sponge" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff6e8"/><stop offset="1" stop-color="#ffe9cc"/>
+            </linearGradient>
+            <radialGradient id="ball" cx=".35" cy=".35" r=".7">
+              <stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#ff9cbc"/>
+            </radialGradient>
+          </defs>`;
+        // cut face: layers of sponge and pink filling
+        const band = (y0, y1, c) => `<rect x="${L}" y="${y0}" width="${R - L}" height="${y1 - y0}" fill="${c}"/>`;
+        out += band(T, 110, '#ffd1df') + band(110, 152, 'url(#sponge)') + band(152, 162, '#f6a6c1') +
+          band(162, 210, 'url(#sponge)') + band(210, 220, '#f6a6c1') + band(220, 262, 'url(#sponge)') +
+          band(262, B, '#e9cfa8');
+        // outer frosting coat on the rim side (right)
+        out += `<path d="M${R - 12} ${T} L${R} ${T} L${R} ${B} L${R - 12} ${B} Z" fill="#f6a6c1"/>`;
+        // top face: narrow at the tip (left), widening to the rounded rim (right)
+        out += `<path d="M${L} ${T} L${R} ${T} Q${R + 8} 66 ${R - 14} 56 Q260 66 ${L} ${T} Z"
+                  fill="url(#topFace)" stroke="#ffb3c9" stroke-width="1.5" stroke-linejoin="round"/>`;
+        out += `<line x1="${L}" y1="${T}" x2="${R}" y2="${T}" stroke="#e892ad" stroke-width="2"/>`;
+        // frosting dollops along the rim and a cherry on top
+        [[R - 4, 70], [R - 24, 60], [R - 46, 58], [R - 68, 60]].forEach(([x, y]) => {
+          out += `<circle cx="${x}" cy="${y}" r="10" fill="url(#ball)"/>`;
+        });
+        out += `<path d="M${R - 36} 44 q 4 -18 18 -24" stroke="#4c8a3f" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <circle cx="${R - 36}" cy="48" r="13" fill="#e0314f"/><circle cx="${R - 40}" cy="43" r="4" fill="#fff" opacity=".6"/>`;
+        // sprinkles on the top face
+        const spr = ['#ffd23f', '#7fd1ff', '#c79bff', '#ffffff', '#8be38b'];
+        for (let i = 0; i < 14; i++) {
+          const x = 80 + i * 24 + (i % 3) * 5;
+          const yTop = T - (x - L) / (R - L) * 36;     // follow the top edge
+          const y = yTop + 4 + ((i * 7) % 11) * ((T - yTop - 6) / 11);
+          out += `<rect x="${x}" y="${y.toFixed(1)}" width="7" height="2.4" rx="1.2" fill="${spr[i % spr.length]}"
+                    transform="rotate(${(i * 47) % 180} ${x + 3.5} ${y.toFixed(1)})"/>`;
+        }
+        svg.innerHTML = out;
+      })();
+
+      const cakeHit = document.getElementById('cakeHit');
+      const photo = document.getElementById('photo');
+      const knife = document.getElementById('knife');
+      const wish = document.getElementById('wish');
+      let cutting = false;
+
+      cakeHit.addEventListener('click', () => {
+        if (cutting) return;
+        cutting = true;
+        hint.classList.add('hide');
+        const firstTime = !photo.classList.contains('show');
+        photo.classList.add('show');
+        setTimeout(() => {
+          knife.classList.remove('cut');
+          void knife.getBoundingClientRect();     // restart the animation
+          knife.classList.add('cut');
+        }, firstTime ? 1100 : 0);
+        setTimeout(() => {
+          wish.classList.add('show');
+          burst(W * 0.25, H * 0.25);
+          burst(W * 0.75, H * 0.22);
+          cutting = false;
+        }, (firstTime ? 1100 : 0) + 1300);
+      });
+
+      wish.addEventListener('click', () => wish.classList.remove('show'));
+
+      let resizeTimer;
+      let lastW = window.innerWidth;
+      window.addEventListener('resize', () => {
+        resizeCanvas();
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          buildCake();
+          if (window.innerWidth !== lastW) { lastW = window.innerWidth; buildGarden(); }
+        }, 150);
+      });
+
+      resizeCanvas();
+      buildCake();
+      buildGarden();
+      requestAnimationFrame(frame);
+    })();
+  </script>
+</body>
+
+</html>
